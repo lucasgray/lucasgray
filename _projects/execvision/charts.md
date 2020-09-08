@@ -23,7 +23,7 @@ Here is a happy example of the resulting output. Note that the suggestion would 
 
 The following snippet is the high level `AvatarScatterPlot` `render()` method. I like how clean it turned out:
 
-```
+```tsx
 <FlexWrapper>
     <Chart
         bordered={false}
@@ -48,7 +48,7 @@ The following snippet is the high level `AvatarScatterPlot` `render()` method. I
         )}
         {repsWithoutPlans.length !== 0 && arrowPointer && arrowDelta && <CalloutArrow
             from={arrowPointer}
-            to={{x: svgDimensions.width, y: scales.yScale(80)}}
+            to={ {x: svgDimensions.width, y: scales.yScale(80)} }
             delta={arrowDelta}
         />}
     </Chart>
@@ -73,7 +73,7 @@ Here are a few relatively boring storybook examples:
 
 One interesting piece of the build out of this component - I built a typescript HoC that could accept a list of user metrics of this shape:
 
-```
+```tsx
 export interface UserTalkListen {
     user: User,
     talkListen: number,
@@ -83,7 +83,7 @@ export interface UserTalkListen {
 
 and bridge the gap to the "pure" heatmap component that rendered "buckets"/cells:
 
-```
+```tsx
 export interface HeatmapProps {
     data: number[][]
     bucketBounds: BucketBounds,
@@ -96,7 +96,7 @@ export interface HeatmapProps {
 It was initially meant to provide zoom functionality as well but was later scrapped.  The HoC typing looked like this, just to give you an idea
 
 
-```
+```tsx
 interface Zoomable {
     onZoomIn: (c: Cell) => void,
     onZoomOut: () => void,
@@ -168,10 +168,17 @@ No sparkline is complete without fancy animations -
 <video controls width='500'>
     <source src="/assets/ev-charts/sparkline-draw.mp4">
 </video>
+<br/>
+
+## Coaching Effectiveness
+
+So the manager spent time coaching, but was it effective? We try to present this metric visually - if the amount of time the manager spends coaching moves the needle on rep call quality or not.
+
+![coaching effectiveness](/assets/ev-charts/coaching-effectiveness.png)
 
 ## Progress circle
 
-Nothing fancy, just a nice little animated progress circle that does what you want.
+Nothing fancy, just a nice little animated progress circle that does what you want.  Check it out in the previous combo chart.
 
 <video controls width='500'>
     <source src="/assets/ev-charts/progress-circle.mp4">

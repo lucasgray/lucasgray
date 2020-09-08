@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Charts | lucasgray.github.io</title>
+<title>Charts | Hello! I’m Lucas</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Charts" />
 <meta property="og:locale" content="en_US" />
@@ -14,12 +14,12 @@
 <meta property="og:description" content="Fun with d3 and typescript" />
 <link rel="canonical" href="http://localhost:4000/projects/execvision/charts.html" />
 <meta property="og:url" content="http://localhost:4000/projects/execvision/charts.html" />
-<meta property="og:site_name" content="lucasgray.github.io" />
+<meta property="og:site_name" content="Hello! I’m Lucas" />
 <script type="application/ld+json">
-{"headline":"Charts","url":"http://localhost:4000/projects/execvision/charts.html","description":"Fun with d3 and typescript","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/projects/execvision/charts.html","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/me.jpg"}},"headline":"Charts","description":"Fun with d3 and typescript","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=a88736f7aa72e93c0f564b8b48f70424552ce9ca">
+    <link rel="stylesheet" href="/assets/css/style.css?v=e170828cec938a7fedc86b8dd224d83ebbc76004">
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -27,11 +27,13 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="http://localhost:4000/">lucasgray.github.io</a></h1>
+        <h1><a href="http://localhost:4000/">Hello! I'm Lucas</a></h1>
         
+        
+          <img src="/assets/me.jpg" alt="Logo" />
         
 
-        <p></p>
+        <p>I'm a guy that likes building software - <del>both at home and at work</del> (COVID UPDATE - this used to be a useful distinction).</p>
 
         
         <p class="view"><a href="https://github.com/lucasgray/lucasgray.github.io">View the Project on GitHub <small>lucasgray/lucasgray.github.io</small></a></p>
@@ -64,42 +66,42 @@
 
 <p>The following snippet is the high level <code class="language-plaintext highlighter-rouge">AvatarScatterPlot</code> <code class="language-plaintext highlighter-rouge">render()</code> method. I like how clean it turned out:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;FlexWrapper&gt;
-    &lt;Chart
-        bordered={false}
-        margins={margins}
-        svgDimensions={svgDimensions}
-    &gt;
-        &lt;PerformanceQuadrants scales={scales} margins={margins}/&gt;
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">FlexWrapper</span><span class="o">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Chart</span>
+        <span class="na">bordered=</span><span class="si">{</span><span class="kc">false</span><span class="si">}</span>
+        <span class="na">margins=</span><span class="si">{</span><span class="nx">margins</span><span class="si">}</span>
+        <span class="na">svgDimensions=</span><span class="si">{</span><span class="nx">svgDimensions</span><span class="si">}</span>
+    <span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">PerformanceQuadrants</span> <span class="na">scales=</span><span class="si">{</span><span class="nx">scales</span><span class="si">}</span> <span class="na">margins=</span><span class="si">{</span><span class="nx">margins</span><span class="si">}</span><span class="p">/&gt;</span>
 
-        &lt;CleanArrowLeftAxis scales={scales} margins={margins} svgDimensions={svgDimensions}
-                            label={`Self-review Score ⟶`}
-        /&gt;
-        &lt;CleanArrowBottomAxis scales={scales} margins={margins} svgDimensions={svgDimensions}
-                                label={"Activity Score ⟶"}
-        /&gt;
+        <span class="p">&lt;</span><span class="nc">CleanArrowLeftAxis</span> <span class="na">scales=</span><span class="si">{</span><span class="nx">scales</span><span class="si">}</span> <span class="na">margins=</span><span class="si">{</span><span class="nx">margins</span><span class="si">}</span> <span class="na">svgDimensions=</span><span class="si">{</span><span class="nx">svgDimensions</span><span class="si">}</span>
+                            <span class="na">label=</span><span class="si">{</span><span class="s2">`Self-review Score ⟶`</span><span class="si">}</span>
+        <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">CleanArrowBottomAxis</span> <span class="na">scales=</span><span class="si">{</span><span class="nx">scales</span><span class="si">}</span> <span class="na">margins=</span><span class="si">{</span><span class="nx">margins</span><span class="si">}</span> <span class="na">svgDimensions=</span><span class="si">{</span><span class="nx">svgDimensions</span><span class="si">}</span>
+                                <span class="na">label=</span><span class="si">{</span><span class="dl">"</span><span class="s2">Activity Score ⟶</span><span class="dl">"</span><span class="si">}</span>
+        <span class="p">/&gt;</span>
 
-        {reps.map(({rep, coordinate, additionalInfo}, i) =&gt;
-            &lt;FancyAvatarPoint key={i}
-                                scales={scales} coordinate={coordinate}
-                                highlight={shouldHighlight(coordinate)} rep={rep}
-                                additionalInfo={additionalInfo} defaultAvatar={defaultAvatar}
-            /&gt;
-        )}
-        {repsWithoutPlans.length !== 0 &amp;&amp; arrowPointer &amp;&amp; arrowDelta &amp;&amp; &lt;CalloutArrow
-            from={arrowPointer}
-            to=
-            delta={arrowDelta}
-        /&gt;}
-    &lt;/Chart&gt;
-    &lt;AdditionalInfo&gt;
-        &lt;CalloutCard
-            title="Who to coach?"
-            extra={this.getExtraTooltipInfo(repsWithoutPlans)}
-        /&gt;
-        &lt;AvatarScatterPlotLegend/&gt;
-    &lt;/AdditionalInfo&gt;
-&lt;/FlexWrapper&gt;
+        <span class="si">{</span><span class="nx">reps</span><span class="p">.</span><span class="nx">map</span><span class="p">(({</span><span class="nx">rep</span><span class="p">,</span> <span class="nx">coordinate</span><span class="p">,</span> <span class="nx">additionalInfo</span><span class="p">},</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="p">&lt;</span><span class="nc">FancyAvatarPoint</span> <span class="na">key=</span><span class="si">{</span><span class="nx">i</span><span class="si">}</span>
+                                <span class="na">scales=</span><span class="si">{</span><span class="nx">scales</span><span class="si">}</span> <span class="na">coordinate=</span><span class="si">{</span><span class="nx">coordinate</span><span class="si">}</span>
+                                <span class="na">highlight=</span><span class="si">{</span><span class="nx">shouldHighlight</span><span class="p">(</span><span class="nx">coordinate</span><span class="p">)</span><span class="si">}</span> <span class="na">rep=</span><span class="si">{</span><span class="nx">rep</span><span class="si">}</span>
+                                <span class="na">additionalInfo=</span><span class="si">{</span><span class="nx">additionalInfo</span><span class="si">}</span> <span class="na">defaultAvatar=</span><span class="si">{</span><span class="nx">defaultAvatar</span><span class="si">}</span>
+            <span class="p">/&gt;</span>
+        <span class="p">)</span><span class="si">}</span>
+        <span class="si">{</span><span class="nx">repsWithoutPlans</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">arrowPointer</span> <span class="o">&amp;&amp;</span> <span class="nx">arrowDelta</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nc">CalloutArrow</span>
+            <span class="na">from=</span><span class="si">{</span><span class="nx">arrowPointer</span><span class="si">}</span>
+            <span class="na">to=</span><span class="si">{</span> <span class="p">{</span><span class="na">x</span><span class="p">:</span> <span class="nx">svgDimensions</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="nx">scales</span><span class="p">.</span><span class="nx">yScale</span><span class="p">(</span><span class="mi">80</span><span class="p">)}</span> <span class="si">}</span>
+            <span class="na">delta=</span><span class="si">{</span><span class="nx">arrowDelta</span><span class="si">}</span>
+        <span class="p">/&gt;</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">Chart</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">AdditionalInfo</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">CalloutCard</span>
+            <span class="na">title=</span><span class="s2">"Who to coach?"</span>
+            <span class="na">extra=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">getExtraTooltipInfo</span><span class="p">(</span><span class="nx">repsWithoutPlans</span><span class="p">)</span><span class="si">}</span>
+        <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">AvatarScatterPlotLegend</span><span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">AdditionalInfo</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="err">/</span><span class="nc">FlexWrapper</span><span class="p">&gt;</span>
 </code></pre></div></div>
 
 <h2 id="exec-talklisten-heatmap">Exec talk/listen heatmap</h2>
@@ -113,77 +115,77 @@
 
 <p>One interesting piece of the build out of this component - I built a typescript HoC that could accept a list of user metrics of this shape:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export interface UserTalkListen {
-    user: User,
-    talkListen: number,
-    interchanges: number
-}
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">UserTalkListen</span> <span class="p">{</span>
+    <span class="nl">user</span><span class="p">:</span> <span class="nx">User</span><span class="p">,</span>
+    <span class="nx">talkListen</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span>
+    <span class="nx">interchanges</span><span class="p">:</span> <span class="nx">number</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>and bridge the gap to the “pure” heatmap component that rendered “buckets”/cells:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export interface HeatmapProps {
-    data: number[][]
-    bucketBounds: BucketBounds,
-    bucketCallout?: BucketCallout,
-    onClickCell: (c: Cell) =&gt; void,
-    onDoubleClickCell?: (c: Cell) =&gt; void
-}
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">HeatmapProps</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="nx">number</span><span class="p">[][]</span>
+    <span class="nx">bucketBounds</span><span class="p">:</span> <span class="nx">BucketBounds</span><span class="p">,</span>
+    <span class="nx">bucketCallout</span><span class="p">?:</span> <span class="nx">BucketCallout</span><span class="p">,</span>
+    <span class="nx">onClickCell</span><span class="p">:</span> <span class="p">(</span><span class="nx">c</span><span class="p">:</span> <span class="nx">Cell</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+    <span class="nx">onDoubleClickCell</span><span class="p">?:</span> <span class="p">(</span><span class="nx">c</span><span class="p">:</span> <span class="nx">Cell</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>It was initially meant to provide zoom functionality as well but was later scrapped.  The HoC typing looked like this, just to give you an idea</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface Zoomable {
-    onZoomIn: (c: Cell) =&gt; void,
-    onZoomOut: () =&gt; void,
-    onZoomReset: () =&gt; void
-}
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Zoomable</span> <span class="p">{</span>
+    <span class="nl">onZoomIn</span><span class="p">:</span> <span class="p">(</span><span class="nx">c</span><span class="p">:</span> <span class="nx">Cell</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+    <span class="nx">onZoomOut</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+    <span class="nx">onZoomReset</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
 
-export interface WithBucketingProps extends Zoomable {
-    reps: UserTalkListen[],
-    bucketBounds: BucketBounds,
-    bucketCallout?: BucketCallout,
-    onSelectReps: (users: User[]) =&gt; void,
-}
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">WithBucketingProps</span> <span class="kd">extends</span> <span class="nx">Zoomable</span> <span class="p">{</span>
+    <span class="nl">reps</span><span class="p">:</span> <span class="nx">UserTalkListen</span><span class="p">[],</span>
+    <span class="nx">bucketBounds</span><span class="p">:</span> <span class="nx">BucketBounds</span><span class="p">,</span>
+    <span class="nx">bucketCallout</span><span class="p">?:</span> <span class="nx">BucketCallout</span><span class="p">,</span>
+    <span class="nx">onSelectReps</span><span class="p">:</span> <span class="p">(</span><span class="nx">users</span><span class="p">:</span> <span class="nx">User</span><span class="p">[])</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+<span class="p">}</span>
 
-export interface WithBuckets {
-    data: number[][],
-    onClickCell: (c: Cell) =&gt; void,
-    onDoubleClickCell?: (c: Cell) =&gt; void
-}
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">WithBuckets</span> <span class="p">{</span>
+    <span class="nl">data</span><span class="p">:</span> <span class="nx">number</span><span class="p">[][],</span>
+    <span class="nx">onClickCell</span><span class="p">:</span> <span class="p">(</span><span class="nx">c</span><span class="p">:</span> <span class="nx">Cell</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+    <span class="nx">onDoubleClickCell</span><span class="p">?:</span> <span class="p">(</span><span class="nx">c</span><span class="p">:</span> <span class="nx">Cell</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+<span class="p">}</span>
 
-export interface ZoomLevel {
-    // yes i know the 3d array looks crazy, but 2d was to render the x&amp;y, and the
-    // 3rd was to store the underlying reps to display next to the graph on click!
-    // note this was collapsed to 2d when passing down so the underyling component
-    // didnt have to care
-    buckets: UserTalkListen[][][],
-    bucketBounds: BucketBounds
-}
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">ZoomLevel</span> <span class="p">{</span>
+    <span class="c1">// yes i know the 3d array looks crazy, but 2d was to render the x&amp;y, and the</span>
+    <span class="c1">// 3rd was to store the underlying reps to display next to the graph on click!</span>
+    <span class="c1">// note this was collapsed to 2d when passing down so the underyling component</span>
+    <span class="c1">// didnt have to care</span>
+    <span class="nl">buckets</span><span class="p">:</span> <span class="nx">UserTalkListen</span><span class="p">[][][],</span>
+    <span class="nx">bucketBounds</span><span class="p">:</span> <span class="nx">BucketBounds</span>
+<span class="p">}</span>
 
-/**
+<span class="cm">/**
  * HoC that wraps the heatmap and provides "pure" and simple data to it,
  * keeping track of the bucketed data it was given.
  *
  * Later provide zoom through this guy too (since this has bucketbounds and reps)
  *
  * @param Component - a (presumably heatmapish) component that supports getting a 2d array of data
- */
-export const withBucketing = &lt;P extends WithBucketingProps, U extends WithBuckets&gt;(Component: React.ComponentType&lt;U&gt;) =&gt; {
+ */</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">withBucketing</span> <span class="o">=</span> <span class="p">&lt;</span><span class="nc">P</span> <span class="nt">extends</span> <span class="nc">WithBucketingProps</span><span class="err">,</span> <span class="nc">U</span> <span class="nt">extends</span> <span class="nc">WithBuckets</span><span class="p">&gt;</span>(Component: React.ComponentType<span class="p">&lt;</span><span class="nc">U</span><span class="p">&gt;</span>) =<span class="err">&gt;</span> <span class="si">{</span>
 
-    return class WithBucketing extends React.Component&lt;P &amp; U, {zoomLevels: Stack&lt;ZoomLevel&gt;}&gt; {
+    <span class="k">return</span> <span class="kd">class</span> <span class="nx">WithBucketing</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="o">&lt;</span><span class="nx">P</span> <span class="o">&amp;</span> <span class="nx">U</span><span class="p">,</span> <span class="p">{</span><span class="na">zoomLevels</span><span class="p">:</span> <span class="nx">Stack</span><span class="o">&lt;</span><span class="nx">ZoomLevel</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&gt;</span> <span class="p">{</span>
 
-        constructor(props: P &amp; U) {
-            super(props);
+        <span class="kd">constructor</span><span class="p">(</span><span class="na">props</span><span class="p">:</span> <span class="nx">P</span> <span class="o">&amp;</span> <span class="nx">U</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
 
-            this.state = {
-                zoomLevels: new Stack&lt;ZoomLevel&gt;()
-            };
-        }
+            <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="na">zoomLevels</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Stack</span><span class="o">&lt;</span><span class="nx">ZoomLevel</span><span class="o">&gt;</span><span class="p">()</span>
+            <span class="p">};</span>
+        <span class="p">}</span>
 
-        // ... this component would bucket / transform and pass off to the wrapped component
-    }
-}
+        <span class="c1">// ... this component would bucket / transform and pass off to the wrapped component</span>
+    <span class="p">}</span>
+<span class="si">}</span>
 </code></pre></div></div>
 
 <h2 id="trend-sparklines">Trend sparklines</h2>
@@ -203,10 +205,17 @@ export const withBucketing = &lt;P extends WithBucketingProps, U extends WithBuc
 <video controls="" width="500">
     <source src="/assets/ev-charts/sparkline-draw.mp4" />
 </video>
+<p><br /></p>
+
+<h2 id="coaching-effectiveness">Coaching Effectiveness</h2>
+
+<p>So the manager spent time coaching, but was it effective? We try to present this metric visually - if the amount of time the manager spends coaching moves the needle on rep call quality or not.</p>
+
+<p><img src="/assets/ev-charts/coaching-effectiveness.png" alt="coaching effectiveness" /></p>
 
 <h2 id="progress-circle">Progress circle</h2>
 
-<p>Nothing fancy, just a nice little animated progress circle that does what you want.</p>
+<p>Nothing fancy, just a nice little animated progress circle that does what you want.  Check it out in the previous combo chart.</p>
 
 <video controls="" width="500">
     <source src="/assets/ev-charts/progress-circle.mp4" />

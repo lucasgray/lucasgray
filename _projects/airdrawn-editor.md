@@ -1,3 +1,4 @@
 ---
-name: airdrawn editor
+name: Airdrawn editor
+description: Playing around with Electron
 ---

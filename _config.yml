@@ -11,3 +11,7 @@ collections:
   projects:
     output: true
 theme: jekyll-theme-minimal
+title: Hello! I'm Lucas
+description: I'm a guy that likes building software - <del>both at home and at work</del> (COVID UPDATE - this used to be a useful distinction).
+logo: /assets/me.jpg
+show_downloads: false
