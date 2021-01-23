@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vr 3 | Hello! I’m Lucas</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Vr 3" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Back to Unity" />
+<meta property="og:description" content="Back to Unity" />
+<link rel="canonical" href="http://localhost:4000/projects/vr/vr-3.html" />
+<meta property="og:url" content="http://localhost:4000/projects/vr/vr-3.html" />
+<meta property="og:site_name" content="Hello! I’m Lucas" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Vr 3","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/me.jpg"}},"url":"http://localhost:4000/projects/vr/vr-3.html","description":"Back to Unity","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=012203db6d904e249b436d339b019ffefc57e7c7">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/">Hello! I'm Lucas</a></h1>
+        
+        
+          <img src="/assets/me.jpg" alt="Logo" />
+        
+
+        <p>I'm a guy that likes building software - <del>both at home and at work</del> (COVID UPDATE - this used to be a useful distinction).</p>
+
+        
+        <p class="view"><a href="https://github.com/lucasgray/lucasgray.github.io">View the Project on GitHub <small>lucasgray/lucasgray.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h1 id="vr-development-diary-entry-3">VR Development Diary Entry #3</h1>
+<h3 id="more-unity">More Unity</h3>
+
+<h3 id="how-it-started">How it started:</h3>
+
+<video controls="" width="500">
+    <source src="/assets/vr/old-whack-a-mole.mp4" />
+</video>
+
+<h3 id="how-its-going">How it’s going:</h3>
+
+<video controls="" width="500">
+    <source src="/assets/vr/kinetic-arcade.mp4" />
+</video>
+
+<p>Now that I’m dangerous in Blender, I created an arcade interior to upgrade my crappy non-uv-unwrapped cube. Massive project cleanup time!</p>
+
+<h2 id="lighting">Lighting</h2>
+
+<p>Lighting, unsurprisingly enough, is a deep topic in Unity. While I don’t understand all the ins and outs yet, here’s my take so far.  I’m using three different types of lights -</p>
+
+<ul>
+  <li>Emissive Materials</li>
+  <li>Baked Lighting</li>
+  <li>Realtime Lighting</li>
+</ul>
+
+<p>Initially emissive materials were what I used for everything, since Unity’s offered light strategies (point, spot, etc) seem to look best if they actually have a model (think lamp shade) attached. The idea with emissive materials is - it’s just a model with a material that can glow, basically. The drawback is that it only contributes to baked (static) lighting.</p>
+
+<p>I use emissive materials on the skeeball machines, punctuated with some spot lights where I can find places to sneak them in. The problem is finding ways to incorporate them and have them look natural. I’m planning on fooling with their intensity to accentuate starting/finishing the game, high scores, etc.</p>
+
+<p>Baked lighting is the act of recoloring materials based on the properties of the materials (reflectiveness, etc) and the lights and light colors around them.  It seems like a great fit for VR because it can create a mood without using a lot of resources in real time. I used baked lighting extensively in the arcade.</p>
+
+<p>As mentioned earlier, I added some realtime lighting to the skeeball machines as well. The main purpose for these is to add some visual interest to the objects that do need to move - the player hands and the balls. Otherwise they wouldn’t get any light sources and end up looking very dull and out of place.</p>
+
+<p>One tip I figured out too late - Window -&gt; Rendering -&gt; Lighting pops up a lighting window, from there you can drag the tab back onto the main Unity window.  I like having Lighting up as a tab to periodically bake a low quality lightmap as I adjust things.</p>
+
+<h2 id="gameplay">Gameplay</h2>
+
+<p>Working on the “skeeball game loop” as I putz with everything else.  Right now the core ball roll feels decent but could be improved, you press the button to start and the balls roll down the chute, and the balls go through the holes in the goal model and become reclaimed by the ball return. I still need to keep track of the scores and display that to the player.</p>
+
+<h2 id="materials-and-fluff">Materials and fluff</h2>
+
+<p>The arcade is coming together with the help of a few asset store purchases. It has a bar/food area, some arcade cabinets, bathrooms, and air hockey (I have some VR ideas for this…). Materials - I found a nice asset for “realistic” painted metal which I’m using for the cabinet for the skeeball machine, and most of the rest of the materials for the floor, brick, skeeball roller area I’m using a great site named <a href="http://cc0textures.com">cc0textures</a>.</p>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>I like the mood so far that I’ve got for the arcade, however, I do need to add a little bit of animation, since it feels pretty stiff. I’m playing with tweening the realtime lights to add feedback, as well as looking into the particle system to add some effects although I’m not sold on it - since I’m keeping things very “realistic” right now I don’t know if I’ll end up liking it or not.</p>
+
+<video controls="" width="500">
+    <source src="/assets/vr/kinetic-arcade-particles.mp4" />
+</video>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/lucasgray">lucasgray</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+  </body>
+</html>
