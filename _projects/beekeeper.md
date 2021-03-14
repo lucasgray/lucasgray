@@ -2,6 +2,7 @@
 name: Beekeeper
 description: An early stage data focused startup (2015-2017)
 layout: default
+date: 2015-01-01
 ---
 
 ![beekeeper logo](/assets/beekeeper/beekeeper.png)

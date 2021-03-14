@@ -2,6 +2,7 @@
 name: Runstrike mobile game
 description: React-native location aware running game 
 layout: default
+date: 2017-01-01
 ---
 
 # Runstrike

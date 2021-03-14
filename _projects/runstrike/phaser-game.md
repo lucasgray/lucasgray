@@ -2,6 +2,7 @@
 name: Runstrike phaser tower defense
 description: Phaser.js game, RIP
 layout: default
+date: 2017-06-01
 ---
 
 # Retrofuturistic Tower Defense

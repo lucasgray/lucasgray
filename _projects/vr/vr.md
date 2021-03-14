@@ -2,6 +2,7 @@
 name: VR Development Diary Entry One
 description: Messing around with Oculus and Unity
 layout: default
+date: 2020-10-01
 ---
 
 ## Intro

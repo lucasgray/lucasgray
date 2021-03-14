@@ -2,24 +2,21 @@
 name: VR Development Diary Entry Three
 description: Back to Unity
 layout: default
+date: 2021-01-01
 ---
 
 # VR Development Diary Entry #3
 ### More Unity
 
-
-
 ### How it started:
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/vr/old-whack-a-mole.mp4">
 </video>
 
-
-
 ### How it's going:
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/vr/kinetic-arcade.mp4">
 </video>
 
@@ -55,6 +52,6 @@ The arcade is coming together with the help of a few asset store purchases. It h
 
 I like the mood so far that I've got for the arcade, however, I do need to add a little bit of animation, since it feels pretty stiff. I'm playing with tweening the realtime lights to add feedback, as well as looking into the particle system to add some effects although I'm not sold on it - since I'm keeping things very "realistic" right now I don't know if I'll end up liking it or not. 
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/vr/kinetic-arcade-particles.mp4">
 </video>

@@ -2,6 +2,7 @@
 name: VR Development Diary Entry Two
 description: Learning Blender
 layout: default
+date: 2020-11-01
 ---
 
 # VR Development Diary Entry #2

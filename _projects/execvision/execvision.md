@@ -2,6 +2,7 @@
 name: Execvision
 description: My current full time gig
 layout: default
+date: 2018-01-01
 ---
 
 # [Execvision](https://www.execvision.io/)
@@ -17,3 +18,14 @@ I've worked at [Execvision](https://www.execvision.io/) since 2018 as the engine
 * [Smart alerts](https://www.execvision.io/product/smart-alerts/) - generic IFTTT type "triggers" that end users can set up in order to receive passive alerts when things happen in the system. For example, when a word is mentioned on a call, when scores dip, or when you receive feedback.
 
 * [Dashboards](https://www.execvision.io/product/performance-dashboards/), always dashboards - pretty charts and other data displays to give you a bird's eye view of how your organization is doing.
+
+## Call Cards
+We recently (Jan 2021) revamped our call display - with a new layout that puts information about the topics discussed in the call first. I rebuilt the waveform display and page layout from the ground up. The colored parts of the waveform denote the energy the topic has - so topics that have tighter clusters are showed visibly by having more area under the lines. The algorithm isn't quite perfect but is a good bird's eye view of topics discussed in a call.
+
+The following is an example of a video call, we use a PIP view that a user can drag and drop to move, expand to the full view, etc.
+
+[![Pure video call card](/assets/execvision/pure-video-call-card.png)](/assets/execvision/pure-video-call-card.png)
+
+The next screenshot is an example of a call that I received an email about due to a Smart Alert - A user coached the call, so I got an alert about it - with a link into the app to show the call.  The coaching happens via comments and highlights displayed under the call waveform.
+
+[![Triggers call card](/assets/execvision/triggers-call-card.png)](/assets/execvision/triggers-call-card.png)

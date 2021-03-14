@@ -2,6 +2,7 @@
 name: VR Development Diary Entry Four
 description: A dark mysterious library
 layout: default
+date: 2021-03-01
 ---
 
 ## Questionable Arts
@@ -10,9 +11,10 @@ My wife is working on a novel and I wanted to surprise her with a replica of one
 
 ## The Library
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/vr/library-walkthrough.mp4">
 </video>
+
 
 The library building itself was supposed to have 7 floors, some grand staircases, and most importantly, a tree growing in the middle. I found some asset store purchases for library components, desks and the like, and a few different tree packages to try. 
 

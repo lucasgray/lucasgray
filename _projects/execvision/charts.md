@@ -2,6 +2,7 @@
 name: Execvision Charts
 description: Fun with d3 and typescript
 layout: default
+date: 2019-01-01
 ---
 
 # `ev-charts`
@@ -165,7 +166,7 @@ If we showed multiple for you to compare, we'd hide the underlying data until yo
 
 No sparkline is complete without fancy animations -
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/ev-charts/sparkline-draw.mp4">
 </video>
 <br/>
@@ -180,6 +181,6 @@ So the manager spent time coaching, but was it effective? We try to present this
 
 Nothing fancy, just a nice little animated progress circle that does what you want.  Check it out in the previous combo chart.
 
-<video controls width='500'>
+<video controls width='700'>
     <source src="/assets/ev-charts/progress-circle.mp4">
 </video>
