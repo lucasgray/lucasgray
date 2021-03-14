@@ -22,7 +22,7 @@ I've worked at [Execvision](https://www.execvision.io/) since 2018 as the engine
 ## Call Cards
 We recently (Jan 2021) revamped our call display - with a new layout that puts information about the topics discussed in the call first. I rebuilt the waveform display and page layout from the ground up. The colored parts of the waveform denote the energy the topic has - so topics that have tighter clusters are showed visibly by having more area under the lines. The algorithm isn't quite perfect but is a good bird's eye view of topics discussed in a call.
 
-The following is an example of a video call, we use a PIP view that a user can drag and drop to move, expand to the full view, etc.
+The following is an example of a video call, we use a PIP view that a user can drag and drop to move, expand to the full view, etc (click these to embiggen, the screenshots are enormous due to my lavish 4k monitor).
 
 [![Pure video call card](/assets/execvision/pure-video-call-card.png)](/assets/execvision/pure-video-call-card.png)
 
