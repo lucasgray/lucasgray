@@ -10,7 +10,7 @@ date: 2021-05-26
 Officially moving on from skeeball for now. While there's plenty of work I could do on the model to make this much more interesting, the game technically works and I want some space from it in order to think more about how I'd improve it. Here's a glimpse at the final result!
 
 <video controls width='700'>
-    <source src="/assets/vr/skeeball.mp4">
+    <source src="/assets/vr/skeeball-1.mp4">
 </video>
 
 ## Creepy Clowns
