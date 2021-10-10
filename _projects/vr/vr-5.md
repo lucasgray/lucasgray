@@ -5,6 +5,14 @@ layout: default
 date: 2021-05-26
 ---
 
+## Skeeball: Done, for now
+
+Officially moving on from skeeball for now. While there's plenty of work I could do on the model to make this much more interesting, the game technically works and I want some space from it in order to think more about how I'd improve it. Here's a glimpse at the final result!
+
+<video controls width='700'>
+    <source src="/assets/vr/skeeball.mp4">
+</video>
+
 ## Creepy Clowns
 
 Back to the arcade. While I mostly just really wanted to make skeeball, an arcade is not complete with only a single machine! I considered a few games, but have a lot of nostalgia for "Down the Clown". Perhaps there is a German word for nostalia of being creeped out, because the clowns that you hit are certainly a creepfest.

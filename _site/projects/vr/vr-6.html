@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vr 6 | Hello! I’m Lucas</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Vr 6" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="THE CLAAAAW" />
+<meta property="og:description" content="THE CLAAAAW" />
+<link rel="canonical" href="http://localhost:4000/projects/vr/vr-6.html" />
+<meta property="og:url" content="http://localhost:4000/projects/vr/vr-6.html" />
+<meta property="og:site_name" content="Hello! I’m Lucas" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Vr 6","dateModified":"2021-07-01T00:00:00-05:00","datePublished":"2021-07-01T00:00:00-05:00","@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/me.jpg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/projects/vr/vr-6.html"},"url":"http://localhost:4000/projects/vr/vr-6.html","description":"THE CLAAAAW","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=864b2dc729afd6f81e5900557e8f5fa9834020ce">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/">Hello! I'm Lucas</a></h1>
+        
+        
+          <img src="/assets/me.jpg" alt="Logo" />
+        
+
+        <p>I'm a guy that likes building software - <del>both at home and at work</del> (COVID UPDATE - this used to be a useful distinction).</p>
+
+        
+        <p class="view"><a href="https://github.com/lucasgray/lucasgray.github.io">View the Project on GitHub <small>lucasgray/lucasgray.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h2 id="in-the-beginning-there-was-an-idea">In the beginning, there was an idea</h2>
+
+<p>I began my claw journey with a bet from a friend. He took the VR arcade for a spin and was disappointed that the claw machine was a static asset! So I went to work.</p>
+
+<h2 id="the-claw-itself">The claw itself</h2>
+
+<p>Modeling the claw wasn’t too bad, mainly simple geometry that needed to be rotated and duplicated a few times to create the claw fingers. I learned something very important though - the origin point in blender is very important, as it becomes the pivot point in Unity. I made sure to be very mindful of my origins in blender so that my claw fingers later on rotated around the joint on the machine.</p>
+
+<p><img src="/assets/vr/claw.png" alt="claw" /></p>
+
+<p>Modeling the rest of the machine wasn’t too exciting, and currently suffers from some of the same problems the other machines do. I need to learn a bit more hard surface modeling techniques to spice them up and add details. I also need to understand surface textures more, they’ve all got a painted metal texture I applied from a bundle in Unity - ideally I’d texture them all separately in Surface Painter. So many things to learn!</p>
+
+<h2 id="the-claw-mechanics">The claw mechanics</h2>
+
+<p>The next step was tying the claw to inputs. I needed a way to control left/right/backwards/forwards and up/down. I opted for the mechanic where you press and hold the button for down, then when you release, the claw closes and returns to the starting position. I worked on the inputs initially in the unity editor so I’d have quicker turnaround - a quick turnaround for changes is very important!</p>
+
+<video controls="" width="700">
+    <source src="/assets/vr/claw-mechanics.mp4" />
+</video>
+
+<h2 id="the-joystick">The joystick</h2>
+
+<p>Almost there! Next step was to wire the inputs to a VR world joystick rather than my current keyboard “wasd” setup for debugging.</p>
+
+<p>This was CHALLENGING!</p>
+
+<p>My first blush at the wiring was to determine the rotation of the joystick - how far off of vertical it was, and which direction, determined velocity and direction of the resulting claw movement. This turned into a total disaster that I’m still not sure I’ve recovered from! Euler angles, quaternions, oh my. What I learned is that there are (mostly) internal/obfuscated rotation descriptions that the engine uses to determine how a 3d object is rotated in space, and it’s extra complicated to prevent something called “gimbal lock”. Euler angles are the more human readable rotation descriptors, but in practice I couldn’t rely on them (maybe because of this gimbal lock mechanic?).</p>
+
+<p>My solution (as a clever/lazy programmer!) was to reframe the problem to remove the rotation problem completely. I added invisible game objects on 4 corners of the joystick, north, east, west, south, and a fifth on the top of the joystick. Basically think of them like little sensors. As the two sensors get closer to one another (distance measurement, very easy and understandable vs rotation) - this is how I know the direction and velocity the claw should be going.</p>
+
+<p>Here’s a video of me rambling (oculus lets me record voice on these vids now, for better or worse) about this whole rotation problem.</p>
+
+<video controls="" width="700">
+    <source src="/assets/vr/claw-ramble-one.mp4" />
+</video>
+
+<p>Anyway! Once I sorted that out, I had a little more work to do on the joystick, and eventually a lot of little cleanup to do on the claw machine, but the bones are there. More rambling ensues.</p>
+
+<video controls="" width="700">
+    <source src="/assets/vr/claw-ramble-two.mp4" />
+</video>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/lucasgray">lucasgray</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+  </body>
+</html>
