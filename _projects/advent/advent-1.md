@@ -7,11 +7,13 @@ date: 2021-09-01
 
 ## Advent of the Advent of the Reaper
 
+![advent splash](/assets/advent/advent-splash.png)
+
 While I was having fun on my own, I missed the camraderie of a team. With Delta surging the second wave of the pandemic was starting to make me stir crazy. I found a redditor looking for help with his tactics RPG and decided to try my hand at some Unity 2D work.
 
 ## Learning 2D
 
-2D in Unity is interesting to say the least. Unity is a 3d engine first and foremost, so they implemented 2D as an extension of 3D. You can actually deselect an option to force 2D and fly around your 2d surfaces in a 3d view! The camera is set to an orthographic view (no perspective), and instead of stacking with a Z value, one uses Sorting layers and ordering in those layers to decide what gets rendered on top.
+2d in Unity is interesting to say the least. Unity is a 3d engine first and foremost, so they implemented 2d as an extension of 3d. You can actually deselect an option to force 2d and fly around your 2d surfaces in a 3d view! The camera is set to an orthographic view (no perspective), and instead of stacking with a Z value, sorting layers and ordering in those layers are used to decide what gets rendered on top.
 
 ## Tutorials First
 
@@ -31,17 +33,23 @@ It might be worth a revisit now that I know a little more about what I'm doing, 
 
 ### Resolution...
 
-![advent splash](/assets/advent/advent-splash.png)
+<video controls width='700'>
+    <source src="/assets/advent/scaling.mp4">
+</video>
 
 The way this camera works (and I think is true for the unity shipped camera too, if it worked) - you don't have a fixed viewport size. Instead, you tell it what the optimal size in pixels is, and then the camera figures out how to scale depending on the viewport. In this way we can achieve anything from a mobile screen to a 4:3 (Switch-like) view to my large 4k monitor without any ill effects. It is important to set up canvases with this in mind, for example elements that should float towards the bottom, or top left/top right, etc. 
 
 ### Meets Units...
 
-![grid cells](/assets/advent/grid-cells.png)
+![first pass map](/assets/advent/first-pass-map.png)
 
 "Units" are Unity's internal representation of distance. They're related to pixels in the sense that you set pixel-per-unit on images you import. The default is 100. There are no hard and fast rules here, many suggest not to change the default, but I thought it'd be a smart idea to have 1 unit = 1 row or column in the tactics grid. This would make the tactics "game board" really easy to work with, since for example as I walk out the character's move possibilities I could simply count cells out.
 
 This wasn't quite so simple in practice! As it turned out, I wanted *TWO* units per cell in order to achieve the view that I needed. It's a little complicated to explain, but the pixel art is 32x32, destined for a potential overall ideal resolution of 640x360. If one unit was 32x32, the camera ended up zoomed in too far and we didn't see enough of the map. But if we doubled the ideal resolution, I was worried that it'd be too big for the small Switch screen. So I elected to make each grid cell 2x2 units, and the PPU (pixel-per-unit) 16, so all of our 32x32 art would expand over 2 units. Complicated but what can you do! 
+
+<video controls width='700'>
+    <source src="/assets/advent/grid.mp4">
+</video>
 
 ## More to come!
 
