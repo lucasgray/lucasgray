@@ -9,6 +9,7 @@ date: 2017-06-01
 ## Now with more Typescript
 
 ### [See the working defense scene here](https://runstrike-phaser.herokuapp.com/)
+* **Note:** it's on a heroku free instance, so give it some time to wake up
 
 Originally I had planned for a mini game to take place inbetween missions for Runstrike (see the other runstrike page).  You'd gather items to craft defenses, then play the tower defense before moving on to the next mission.  
 

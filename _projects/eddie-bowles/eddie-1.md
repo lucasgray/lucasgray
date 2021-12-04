@@ -5,17 +5,17 @@ layout: default
 date: 2021-11-28
 ---
 
-## A history of Eddie Bowles, and the project
+## A history of Eddie Bowles
 
 [Eddie Bowles](https://wcfcourier.com/news/local/paving-the-way-brought-to-lay-brick-eddie-bowles-taught-a-generation-of-blues-musicians/article_d0a1f68d-d94d-5384-ab89-133ac4da0f7c.html) was a jazz musician who moved from New Orleans to Iowa about a century ago for work. He played with some of the greats in New Orleans around the turn of the century before making his way north, and was a successful musician who flew under the radar in small Cedar Falls, Iowa. 
 
-I attended college in Cedar Falls and caught wind of the project. A museum exhibit on his life was being planned, due to be unveiled February 2022 as part of Black History Month. A history professor had some extra grant money to do something with technology to augment the tour and wanted some help. He was thinking specifically of using [ARKit](https://developer.apple.com/augmented-reality/) to do something fancy with Eddie in the shot perhaps. We talked things over and I began work.
+I attended college in Cedar Falls and caught wind of the project. The [Hearst Center for the Arts](https://www.thehearst.org/) would be putting on an exhibit about Eddie's life and history. A professor with Northern Iowa had some extra grant money to do something with technology to augment the tour and wanted some help. He was thinking specifically of using [ARKit](https://developer.apple.com/augmented-reality/) to do something fancy with Eddie in the shot perhaps. We talked things over and I began work.
 
 There are a few locations in Cedar Falls pertinent to his life - places he busked with his guitar, playing late into the night. Where he worked. Other fun connections to local Cedar Falls history. We both decided that we could turn this into a self guided walking tour.
 
 ## Enter Mapbox
 
-I love [Mapbox](https://www.mapbox.com/).  [Runstrike]({{ site.baseurl }}{% link _projects/runstrike/mobile-game.md %}) uses mapbox extensively to display route information. It's awesome that they're based on openstreetmap data, and all their libraries just work extremely well. 
+[Mapbox](https://www.mapbox.com/) is something I'll always find any excuse to play with.  [Runstrike]({{ site.baseurl }}{% link _projects/runstrike/mobile-game.md %}) uses mapbox extensively to display route information. It's awesome that they're based on openstreetmap data, and all their libraries just work extremely well. 
 
 I started experimenting with the [Unity Mapbox Plugin](https://www.mapbox.com/unity). There were plenty of examples to get started with. I found that the Location-based game prefab was close enough to what I needed that I was able to pull that off the shelf and get going with only a few modifications. There are a few different emulation swap-ins for a Location Provider, file based and array based, so I grabbed a bunch of Cedar Falls lat longs and plugged them in. I was immediately heartened by the progress!
 
@@ -25,13 +25,13 @@ I started experimenting with the [Unity Mapbox Plugin](https://www.mapbox.com/un
 
 ### Zoom controls, then later, a follow cam
 
-Zoom controls weren't too hard. I keep an array of positions - distance behind the player indicator, X rotation, and camera height. All three values are tweaked when zooming in and out - over the shoulder view needs to be a little closer to the player and quite a bit of X rotation, top down birds eye view needs no distance behind, no X rotation, just camera height. So I choose the right value out of the array and otherwise keep the camera following the player. That is easy - we just keep an eye on the player position via the camera's update loop, translate geo coord to Unity world x/y/z, and update the camera position. I also added a full zoom "map" - so you can get an idea of the entire area of the tour. Waypoints and such to come!
+Zoom controls weren't too hard. I keep an array of positions - distance behind the player indicator, X rotation, and camera height. All three values are tweaked when zooming in and out - over the shoulder view needs to be a little closer to the player and quite a bit of X rotation, top down birds eye view needs no distance behind, no X rotation, just camera height. So I choose the right value out of the array and otherwise keep the camera following the player. Fairly straightforward - we just keep an eye on the player position via the camera's update loop, translate geo coord to Unity world x/y/z, and update the camera position. I also added a full zoom "map" - so you can get an idea of the entire area of the tour. Waypoints and such to come!
 
 <video controls width='700'>
     <source src="/assets/eddie-bowles/zoom.mp4">
 </video>
 
-I struggled with this but eventually decided I did actually want the camera to also rotate with the player indicator. It is just the most natural way to look at a map while trying to sort out directions on your phone. It's the way a car GPS would work for a good reason. So I went to work sorting that out. Mapbox comes with a script - `RotateWithLocationProvider.cs`, but I needed to reconcile it with my previous camera work. Particularly, if we are trying to keep the camera some distance behind the indicator, "behind" will change based on the player bearing!
+I waffled but eventually decided I did actually want the camera to also rotate with the player indicator. It is just the most natural way to look at a map while trying to sort out directions on your phone. It's the way a car GPS would work for a good reason. Mapbox comes with a script - `RotateWithLocationProvider.cs` which gets us really close, but I needed to reconcile it with my previous camera work. Particularly, if we are trying to keep the camera some distance behind the indicator, "behind" will change based on the player bearing!
 
 I ended up combining a modified version of the mapbox script with my `FollowCam.cs` script. At the heart of the update loop we have these two lines -
 
@@ -42,26 +42,15 @@ transform.localRotation =
     Quaternion.Lerp(transform.localRotation, _targetRotation, Time.deltaTime * _updateFactor);
 ```
 
-The rest of the location updates and zoom updates will change what we think of as the ideal "_targetRotation", then we continually lerp towards it for that smoothed look. On the topic of smoothing, the provided user location bearing was a little choppy. You can either choose the phone bearing or a heading based on previous location updates. Neither was very satisfying, but I implemented some very simple smoothing - 
+The rest of the location updates and zoom updates will change what we think of as the ideal "_targetRotation", then we continually lerp towards it for that smoothed look. On the topic of smoothing, the provided user location bearing was a little choppy. You can either choose the phone bearing or a heading based on previous location updates. 
 
-```
-if (SmoothRotationAngles)
-{
-    _recentRotationAngles.Enqueue(rotationAngle);
-    if (_recentRotationAngles.Count > AmtToSmooth)
-    {
-        _recentRotationAngles.Dequeue();
-    }
-
-    rotationAngle = _recentRotationAngles.Average();
-}
-```
+Neither was very satisfying, but I implemented some very simple smoothing on top (keeping a running average of the latest few rotation updates).
 
 I also considered throwing out outliers but didn't go too far. I later learned that some of the underlying Mapbox scripts have some knobs to turn too, but this seems to work well enough to keep going.
 
 ## Waypoints
 
-Waypoints were very simple to implement in Unity! They are simply a few models that have trigger colliders. When the player indicator enters the trigger area, we register the hit and give the user the option to "claim" the area and receive more information. I have an ARPG kit that I used to find a glowey circle which made a great waypoint highlighter.
+Waypoints were very simple to implement in Unity! They are simply a few `GameObjects` that have `Trigger` `Colliders`. When the player indicator enters the trigger area, we register the hit and give the user the option to "claim" the area and receive more information. I have an ARPG kit that I used to find a glowey circle which made a great waypoint highlighter.
 
 <video controls width='700'>
     <source src="/assets/eddie-bowles/waypoint.mp4">

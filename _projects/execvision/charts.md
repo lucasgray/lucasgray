@@ -7,6 +7,8 @@ date: 2019-01-01
 
 # `ev-charts`
 
+### **2021 UPDATE** - This is old and based on React 15. Don't judge me for any class components and lack of hooks :)
+
 `ev-charts` is an npm library I built for ExecVision to house all our d3 react components.  We primarily use d3 as a library and build `<svg/>` elements declaratively in typescript-aware react components. Here are a few fun examples -
 
 ## 9 box
