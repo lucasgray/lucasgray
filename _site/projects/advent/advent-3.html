@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Advent 3 | Hello! I’m Lucas</title>
+<meta name="generator" content="Jekyll v3.9.2" />
+<meta property="og:title" content="Advent 3" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="States" />
+<meta property="og:description" content="States" />
+<link rel="canonical" href="http://localhost:4000/projects/advent/advent-3.html" />
+<meta property="og:url" content="http://localhost:4000/projects/advent/advent-3.html" />
+<meta property="og:site_name" content="Hello! I’m Lucas" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-06-01T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Advent 3" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-06-01T00:00:00-05:00","datePublished":"2022-06-01T00:00:00-05:00","description":"States","headline":"Advent 3","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/projects/advent/advent-3.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/me.jpg"}},"url":"http://localhost:4000/projects/advent/advent-3.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=90e6c9850ce65861638423c15e04a29435df8dd9">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/">Hello! I'm Lucas</a></h1>
+
+        
+          <img src="/assets/me.jpg" alt="Logo" />
+        
+
+        <p>I'm a guy that likes building software - <del>both at home and at work</del> (COVID UPDATE - this used to be a useful distinction).</p>
+
+        
+        <p class="view"><a href="https://github.com/lucasgray/lucasgray.github.io">View the Project on GitHub <small>lucasgray/lucasgray.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h2 id="state-of-the-adventinalia">State of the Adventinalia</h2>
+
+<p>At this point in my Unity learning path, I feel decently comfortable designing small games. The VR arcade, Eddie’s tour. Until now I haven’t needed anything too complex. I had to take a step back with the main Advent battle scene.</p>
+
+<p>Think about what the tactical RPG needs to do.</p>
+
+<ol>
+  <li>Choose a turn</li>
+  <li>Pause and wait for the character to select a character</li>
+  <li>If a character is selected, display movement</li>
+  <li>once movement is chosen, pop up a menu allowing confirmation (among other things)</li>
+  <li>Ask if they’d like to attack, if so, which cell to attack?</li>
+  <li>Finally, display the attack vignette to resolve combat and return to #1/#2</li>
+</ol>
+
+<p>That’s for the player’s turn! If it’s the AIs turn, we walk through a subset of those items on a loop before returning input control back to the player. Also, we need to allow a player to roll back to a previous step (cancel selection).</p>
+
+<p>I did some searching and arrived at a solution similar to a few I’ve seen, hoping to strike the balance between hacky and overly abstract.</p>
+
+<p><img src="/assets/advent/state-file-hierarchy.png" alt="state file hierarchy" /></p>
+
+<p>I decided to introduce the idea of <code class="language-plaintext highlighter-rouge">State</code>s. There is an overall <code class="language-plaintext highlighter-rouge">StateMachine</code> that keeps track of which states are active and which are overlaid by what (via a <code class="language-plaintext highlighter-rouge">Priority</code> field).</p>
+
+<p>On <code class="language-plaintext highlighter-rouge">StateMachine</code> for example we have the method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public State PriorityActiveState()
+{
+    return ActiveStates().MaxBy(a =&gt; a.Priority).First();
+}
+</code></pre></div></div>
+
+<p>Which is used often to select the active state (for example, other decoupled UI components may hide themselves if the active state is the battle vignette).</p>
+
+<p><code class="language-plaintext highlighter-rouge">GameState</code> holds the most important state for the battle map - the Set of board pieces, the map tile information, who’s turn it is and how many turns has elapsed, that sort of thing. It is in charge of keeping track of turns. It also holds an instance to the <code class="language-plaintext highlighter-rouge">VisualNovelEngine</code> which is a good topic for another post :)</p>
+
+<p>Finally, the majority of the rest of the <code class="language-plaintext highlighter-rouge">State</code>s in the folder implement the following interface / class combination -</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>namespace States
+{
+    public interface State
+    {
+        int Priority { get; }
+
+        bool Active { get; set; }
+        List&lt;State&gt; IsOverlaidBy { get; set; }
+        
+        void HandlePrimaryAction();
+        void HandleSecondaryAction();
+        void HandleMousePosition(Vector2 newPos);
+
+        //TODO left/right/up/down
+    }
+    
+    public interface State&lt;in T&gt; : State
+    {
+        void Activate(T t);
+        void Deactivate();
+    }
+
+
+    public abstract class BaseState&lt;T&gt; : MonoBehaviour, State&lt;T&gt; where T : class
+    {
+        public T DisplayProps { get; private set; }
+
+        public virtual void Activate(T t)
+        {
+            DisplayProps = t;
+            Active = true;
+        }
+
+        public virtual void Deactivate()
+        {
+            DisplayProps = null;
+            Active = false;
+        }
+
+        public abstract int Priority { get; }
+        public abstract bool Active { get; set; }
+        public abstract List&lt;State&gt; IsOverlaidBy { get; set; }
+        public abstract void HandlePrimaryAction();
+        public abstract void HandleSecondaryAction();
+        public abstract void HandleMousePosition(Vector2 newPos);
+    }
+}
+</code></pre></div></div>
+
+<p>The generic <code class="language-plaintext highlighter-rouge">T</code> exists so that when a <code class="language-plaintext highlighter-rouge">State</code> is <code class="language-plaintext highlighter-rouge">Activate</code>d, any typed properties can be passed in to be used for the rest of the lifecycle of the <code class="language-plaintext highlighter-rouge">State</code>. Sure it could be more tightly coupled to <code class="language-plaintext highlighter-rouge">GameState</code> for example but this let’s them exist more independently.</p>
+
+<p>The big idea here - See the <code class="language-plaintext highlighter-rouge">Handle*</code> methods. This allows a state - critically - to be in charge of capturing user input. The priority active state should be the one to capture and interpret input. For now, we’re just focused on keyboard and mouse, but later on this can be used to implement left/right/up/down with a controller or phone (buttons on display).</p>
+
+<p>As a simple example, here’s how the Options menu was implemented (tied to pressing escape) -</p>
+
+<p><img src="/assets/advent/options-menu.png" alt="options menu" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>namespace States
+{
+    public class OptionsMenu : MonoBehaviour, State
+    {
+        public int Priority =&gt; 100;
+        public bool Active { get; set; }
+        public List&lt;State&gt; IsOverlaidBy { get; set; }
+
+        public GameObject menu;
+
+        public Sneezeguard sneezeguard;
+        
+        public void HandlePrimaryAction()
+        {
+            // do nothing
+        }
+
+        public void ShowMenu()
+        {
+            menu.SetActive(true);
+            sneezeguard.Show();
+        }
+
+        public void HideMenu()
+        {
+            menu.SetActive(false);
+            sneezeguard.Hide();
+        }
+        
+        public void HandleSecondaryAction()
+        {
+            // do nothing
+        }
+
+        public void HandleMousePosition(Vector2 newPos)
+        {
+            // do nothing
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>And one more simple one - the <code class="language-plaintext highlighter-rouge">State</code> that pops up the battle vignette! When the vignette runs, we don’t let the player interact until it’s over, so handling input is really easy :) This time however, we actually use the generic.</p>
+
+<p><img src="/assets/advent/battle-vignette.png" alt="battle vignette" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>namespace States
+{
+    public class AttackDisplayProps
+    {
+        public BoardPiece Ally { get; set; }
+        public BoardPiece Enemy { get; set; }
+    }
+    
+    public class BoardPieceAttackState : BaseState&lt;AttackDisplayProps&gt;
+    {
+        public override int Priority =&gt; 1;
+        public override bool Active { get; set; }
+        public override List&lt;State&gt; IsOverlaidBy { get; set; }
+
+        public AttackFlourish attackFlourish;
+        
+        public StateMachine stateMachine;
+
+        public override void Activate(AttackDisplayProps t)
+        {
+            base.Activate(t);
+            
+            StartCoroutine(DoAttack(t.Ally, t.Enemy));
+        }
+
+        public IEnumerator DoAttack(BoardPiece ally, BoardPiece enemy)
+        {
+            var instance = Instantiate(attackFlourish, attackFlourish.transform.parent, true);
+            
+            yield return instance.AttackAnimation();
+            stateMachine.RequestDeactivateState(this);
+            Destroy(instance.gameObject);
+            ally.TakeTurn();
+        }
+        
+        public override void HandlePrimaryAction()
+        {
+            // do nothing
+        }
+
+        public override void HandleSecondaryAction()
+        {
+            // do nothing
+        }
+
+        public override void HandleMousePosition(Vector2 newPos)
+        {
+            // do nothing
+        }
+    }
+}
+</code></pre></div></div>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/lucasgray">lucasgray</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
